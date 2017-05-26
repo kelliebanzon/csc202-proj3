@@ -26,3 +26,9 @@ class Node:
         return type(other) == Node and self.char == other.char and self.freq == other.freq and self.left == other.left and self.right == other.right
     def __repr__(self):
         return "{}, freq = {}\n\tleft = {}\n\t{}".format(self.char, self.freq, self.left.__repr__(), self.right.__repr__())
+
+
+# given a text file, returns a list with the number of times each character within that file appears
+# file -> list
+def freq_counter(input):
+    pass
