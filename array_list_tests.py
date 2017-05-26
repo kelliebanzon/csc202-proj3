@@ -66,6 +66,12 @@ class TestList(unittest.TestCase):
         self.assertEqual(set(ArrayList([0, 1, 2, 3]), 0, 16), ArrayList([16, 1, 2, 3]))
         self.assertRaises(IndexError, set, self.list_1, 27, 0)
 
+    def test_increment(self):
+        self.assertEqual(increment(ArrayList([0,1,2,3]), 2), ArrayList([0,1,3,3]))
+        self.assertRaises(IndexError, increment, empty_list(), 2)
+        self.assertRaises(IndexError, increment, ArrayList([0,1,2,3]), 16)
+        self.assertEqual(increment(increment(ArrayList([0,1,2,3]), 2), 0), ArrayList([1,1,3,3]))
+
     def test_remove(self):
         self.assertEqual(remove(ArrayList([0, 1, 2, 3]), 0), (0, ArrayList([1, 2, 3])))
         self.assertEqual(remove(ArrayList([0, 1, 2, 3]), 2), (2, ArrayList([0, 1, 3])))

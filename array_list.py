@@ -150,6 +150,19 @@ def set(list, index, value):
         list.values[index] = value
         return list
 
+# increments the value at a given index by 1
+# note: only works for an ArrayList of numbers
+# note: uses mutation
+# ArrayList -> ArrayList
+def increment(list, index):
+    if index < 0 or index > list.length-1:
+        raise IndexError
+    elif list.values[index] == None:
+        list.values[index] = 1
+    else:
+        list.values[index] += 1
+    return list
+
 
 # removes the value at a given index
 # return the old value and the updated list
