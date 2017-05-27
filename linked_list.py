@@ -72,3 +72,12 @@ def remove(list, index):
     else:
         fin = remove(list.rest, index - 1)
         return fin[0], Pair(list.first, fin[1])
+
+
+# inserts a value into a sorted list in ascending order according to a given comparison function
+# AnyList value function -> AnyList
+def insert_sorted(list, val, func):
+    if list == None or func(val, list.first):
+        return Pair(val, list)
+    else:
+        return Pair(list.first, insert_sorted(list.rest, val, func))

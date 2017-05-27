@@ -1,6 +1,12 @@
 import unittest
 from linked_list import *
 
+def less_than(a, b):
+    if a < b:
+        return True
+    else:
+        return False
+
 class TestList(unittest.TestCase):
     # Note that this test doesn't assert anything! It just verifies your
     #  class and function definitions.
@@ -11,6 +17,7 @@ class TestList(unittest.TestCase):
         get(temp_list, 0)
         temp_list = set(temp_list, 0, "Bye!")
         remove(temp_list, 0)
+
 
     list_1 = Pair(0, None)
     list_2 = Pair(0, Pair(1, Pair(2, None)))
@@ -51,6 +58,13 @@ class TestList(unittest.TestCase):
         self.assertEqual(remove(self.list_2, 1), (1, Pair(0, Pair(2, None))))
         self.assertRaises(IndexError, remove, self.list_2, 8)
         self.assertRaises(IndexError, remove, add(add(add(empty_list(), 0, 5), 0, 4), 0, 3), 3)
+
+    def test_insert_sorted(self):
+        self.assertEqual(insert_sorted(Pair(0, None), 12, less_than), Pair(0, Pair(12)))
+        self.assertEqual(insert_sorted(Pair(12, None), 0, less_than), Pair(0, Pair(12)))
+        self.assertEqual(insert_sorted(empty_list(), 9, less_than), Pair(9))
+        self.assertEqual(insert_sorted(Pair(1, Pair(2, Pair(3, Pair(4, None)))), 5, less_than),
+                         Pair(1, Pair(2, Pair(3, Pair(4, Pair(5, None))))))
 
 
 if __name__ == '__main__':
