@@ -165,6 +165,8 @@ class TestList(unittest.TestCase):
                          al.set(al.set(al.set(al.set(al.set(al.ArrayList([None]*250), 32, "00"), 98, "01"), 100, "100"), 99, "101"), 97, "11"))
         self.assertEqual(build_codes(build_tree(self.huff_list)),
                          al.set(al.set(al.set(al.set(al.set(al.ArrayList([None] * 250), 32, "00"), 98, "01"), 100, "100"), 99, "101"), 97, "11"))
+        self.assertEqual(build_codes(build_tree(freq_counter("huff_ex.txt"))),
+                         al.set(al.set(al.set(al.set(al.set(al.ArrayList([None] * 250), 32, "00"), 98, "01"), 100, "100"), 99, "101"), 97, "11"))
 
 
 
