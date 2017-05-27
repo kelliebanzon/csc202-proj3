@@ -1,3 +1,23 @@
+# usage instructions:
+"""
+    from huffman_bits_io import *
+    
+    hb_writer = HuffmanBitsWriter(fname)  # open file 'fname' for writing in binary mode
+    hb_writer.write_byte(val)  # write integer 'val' as a 1 byte
+    hb_writer.write_int(val)  # write integer 'val' as a 4 bytes
+    hb_writer.write_code(str)  # write a code string 'str' consisting of '0' and '1' characters
+    hb_writer.close()  # clears output buffer and closes file
+    
+    hb_reader = HuffmanBitsReader(fname)  # open file 'fname' for reading in binary mode
+    val = hb_reader.read_byte()  # read 1 byte as an unsigned integer value
+    val = hb_reader.read_int()  # read 4 bytes represented as an integer value
+    bit = hb_reader.read_bit()  # read a single bit and return a Boolean (1 = True, 0 = False)
+    hb_reader.close()  # closes file
+"""
+
+
+# --------------------------------------------------------------------
+
 #
 #   Bit-packing reader and writer for Huffman encoder and decoder
 #
