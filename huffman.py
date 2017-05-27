@@ -132,6 +132,8 @@ class TestList(unittest.TestCase):
     tree0 = Node(32, 6, Leaf(32, 3), Leaf(98, 3))
     tree1 = Node(97, 7, Node(99, 3, Leaf(100, 1), Leaf(99, 2)), Leaf(97, 4))
 
+    print(tree0)
+
     def test_freq_counter(self):
         self.assertRaises(FileNotFoundError, freq_counter, "fake_file.txt")
         al_first = al.ArrayList([None]*250)
