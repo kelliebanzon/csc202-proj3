@@ -68,7 +68,7 @@ def add(curr, index, val):
         curr.fixed = curr.length
         return curr
 
-def add_grow20(curr, index, val):
+"""def add_grow20(curr, index, val):
     if index > curr.length or index < 0:
         raise IndexError
     elif curr.length == curr.fixed:
@@ -123,7 +123,7 @@ def add_double(curr, index, val):
             new[i] = curr.values[i-1]
         curr.values = new
         curr.length = curr.length + 1
-    return curr
+    return curr"""
 
 
 # returns the length of a given list
@@ -187,8 +187,8 @@ def remove_index(list, index):
             ls[i] = list.values[i]
         for i in range(index+1, list.length):
             ls[i-1] = list.values[i]
-        for i in range(list.length, list.fixed):
-            ls[i] = None
+        """for i in range(list.length, list.fixed):
+            ls[i] = None"""
         list.values = ls
         list.length -= 1
         return list
@@ -228,11 +228,11 @@ def sort(list, func, new = empty_list()):
     return list
 
 
-def sort_no_mute(list, func, new = empty_list()):
+"""def sort_no_mute(list, func, new = empty_list()):
     for i in range(0, list.length):
         j = 0
         while j <= new.length-1 and func(list.values[i], new.values[j]) == False:
             j += 1
         new = add(new, j, list.values[i])
     new_list = ArrayList(new.values)
-    return new_list
+    return new_list"""
