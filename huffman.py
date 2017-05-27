@@ -76,15 +76,21 @@ def comes_before(a, b):
             return False
 
 
-# given a list of character occurrences, builds a Huffman tree
-# list -> tree
-def build_tree(list):
-    # build sorted linked_list of values (these will become the leaves)
+# given a list of frequencies, builds sorted linked_list of leaves
+# list -> list
+def build_sorted_leaves(list):
     sorted = ll.empty_list()
     for i in range(0, 250):
         if list.values[i] != None:
             sorted = ll.insert_sorted(sorted, Leaf(i, list.values[i]), comes_before)
-    while ll.length(sorted) > 1:
+    return sorted
+
+
+# given a list of character occurrences, builds a Huffman tree
+# list -> tree
+def build_tree(list):
+    sorted = build_sorted_leaves(list)  # TODO: re-nest build_sorted_leaves
+    while ll.length(sorted) > 1:        # TODO: inefficient
         tup = ll.remove(sorted, 0)
         first = tup[0]
         sorted = tup[1]
@@ -100,16 +106,37 @@ def build_tree(list):
     return node
 
 
+# given a Huffman tree, returns a list of the keys for each Leaf
+# tree -> list
+def build_codes(tree, ls = al.ArrayList([None]*250), acc = ""):
+    if type(tree) == Leaf:
+        al.set(ls, tree.char, acc)
+    else:
+        build_codes(tree.left, ls, acc+"0")
+        build_codes(tree.right, ls, acc+"1")
+    return ls
 
+
+# finds the binary code to a specific leaf in a tree
+# tree leaf -> string
+"""def find_code(tree, leaf, acc = ""):
+    if tree == leaf:
+        return acc
+    else:
+        pass"""
+
+
+
+# ----------------------------------------------------------------------------------------------------------------------
 
 import unittest
 
 class TestList(unittest.TestCase):
 
     huff_list = al.set(al.set(al.set(al.set(al.set(al.ArrayList([None]*250), 97, 4), 98, 3), 99, 2), 100, 1), 32, 3)
-    huff_example = Node(32, 13,
-                        Node(32, 6, Leaf(32, 3), Leaf(98, 3)),
-                        Node(97, 7, Node(99, 3, Leaf(100, 1), Leaf(99, 2)), Leaf(97, 4)))
+    huff_tree = Node(32, 13,
+                     Node(32, 6, Leaf(32, 3), Leaf(98, 3)),
+                     Node(97, 7, Node(99, 3, Leaf(100, 1), Leaf(99, 2)), Leaf(97, 4)))
     tree0 = Node(32, 6, Leaf(32, 3), Leaf(98, 3))
     tree1 = Node(97, 7, Node(99, 3, Leaf(100, 1), Leaf(99, 2)), Leaf(97, 4))
 
@@ -124,18 +151,35 @@ class TestList(unittest.TestCase):
     def test_tree_traversal(self):
         self.assertEqual(tree_traversal(self.tree0), " b")
         self.assertEqual(tree_traversal(self.tree1), "dca")
-        self.assertEqual(tree_traversal(self.huff_example), " bdca")
+        self.assertEqual(tree_traversal(self.huff_tree), " bdca")
 
     def test_comes_before(self):
         self.assertEqual(comes_before(self.tree0, self.tree1), True)
-        self.assertEqual(comes_before(self.huff_example, self.tree0), False)
+        self.assertEqual(comes_before(self.huff_tree, self.tree0), False)
         self.assertEqual(comes_before(Leaf(32, 3), Leaf(98, 3)), True)
 
+    def test_build_sorted_leaves(self):
+        self.assertEqual(build_sorted_leaves(self.huff_list),
+                         ll.Pair(Leaf(100, 1), ll.Pair(Leaf(99, 2), ll.Pair(Leaf(32, 3), ll.Pair(Leaf(98, 3), ll.Pair(Leaf(97, 4)))))))
+
     def test_build_tree(self):
-        self.assertEqual(build_tree(self.huff_list), self.huff_example)
+        self.assertEqual(build_tree(self.huff_list), self.huff_tree)
         self.assertEqual(build_tree(al.set(al.set(al.ArrayList([None]*250), 32, 3), 98, 3)), self.tree0)
         self.assertEqual(build_tree(freq_counter("first.txt")),
                          Node(97, 6, Leaf(97, 3), Node(98, 3, Leaf(99, 1), Leaf(98, 2))))
+
+    def test_build_codes(self):
+        self.assertEqual(build_codes(self.huff_tree),
+                         al.set(al.set(al.set(al.set(al.set(al.ArrayList([None]*250), 32, "00"), 98, "01"), 100, "100"), 99, "101"), 97, "11"))
+        self.assertEqual(build_codes(build_tree(self.huff_list)),
+                         al.set(al.set(al.set(al.set(al.set(al.ArrayList([None] * 250), 32, "00"), 98, "01"), 100, "100"), 99, "101"), 97, "11"))
+        self.assertEqual(build_codes(build_tree(freq_counter("first.txt"))),
+                         al.set(al.set(al.set(al.ArrayList([None]*250), 97, "0"), 99, "10"), 98, "11"))
+
+    """def test_find_code(self):
+        self.assertEqual(find_code(self.huff_tree, 32), "00")
+        self.assertEqual(find_code(self.huff_tree, 100), "100")
+        self.assertEqual(find_code(self.tree0, 98), "1")"""
 
 
 
