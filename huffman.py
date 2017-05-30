@@ -89,7 +89,7 @@ def build_sorted_leaves(list):
 # given a list of character occurrences, builds a Huffman tree
 # list -> tree
 def build_tree(list):
-    sorted = build_sorted_leaves(list)  # TODO: re-nest build_sorted_leaves
+    sorted = build_sorted_leaves(list)  # TODO: re-nest build_sorted_leaves?
     while ll.length(sorted) > 1:        # TODO: inefficient
         tup = ll.remove(sorted, 0)
         first = tup[0]
